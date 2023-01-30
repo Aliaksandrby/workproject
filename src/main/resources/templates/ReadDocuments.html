@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All documents</title>
+    <link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/tag_a.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h3 align="center">My all documents</h3>
+<h3 align="center"><a th:href="@{/document/new}">create document</a></h3>
+
+<table class="rounded" align="center">
+<tr>
+    <th>id</th>
+    <th>type</th>
+    <th>name</th>
+    <th>description</th>
+    <th>files</th>
+    <th>Is Update?</th>
+    <th>Is delete?</th>
+</tr>
+<tr th:each="document : ${documentList}">
+    <td th:text="${document.id}"></td>
+    <td th:text="${document.type}"></td>
+    <td th:text="${document.name}"></td>
+    <td th:text="${document.description}"></td>
+    <td>
+        <div th:each="fileDocument : ${document.fileDocumentList}">
+            <span th:text="${fileDocument.file == ''} ? 'empty':'not empty'"></span>
+        </div>
+
+    </td>
+    <td><a th:href="@{/update/{id}(id=${document.id})}">update</a></td>
+    <td><a th:href="@{/delete/{id}(id=${document.id})}">delete</a></td>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+<!-- <img th:src="${car.imageCarList.get(0).image.equals('')} ?
+                    @{/resources/img/noAuto.png} : ${'data:image/jpeg;base64,'+{car.imageCarList.get(0).image}}"> -->
+
+<!--<div id="avrDiv" class="warning" th:each="carImage : ${car.imageCarList}">
+    <img th:src="${carImage.image.equals('')} ?
+             @{/resources/img/noAuto.png} : ${'data:image/jpeg;base64,'+{carImage.image}}">
+</div>-->
+
+<!--th:src="${'data:file/pdf;base64,' + myfile.profilePdf}"-->

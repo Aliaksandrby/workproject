@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update document</title>
+    <link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/tag_a.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h3 align="center">Update document</h3>
+<table class="rounded" align="center">
+    <tr>
+        <th>id</th>
+        <th>type</th>
+        <th>name</th>
+        <th>description</th>
+        <th>files</th>
+        <th>Is delete?</th>
+    </tr>
+    <tr>
+        <td th:text="${document.id}"></td>
+        <td th:text="${document.type}"></td>
+        <td th:text="${document.name}"></td>
+        <td th:text="${document.description}"></td>
+        <td>some files</td>
+        <td><a th:href="@{/delete/{id}(id=${document.id})}">delete</a></td>
+    </tr>
+</table>
+<br>
+<div align="center">
+    <form th:action="@{/update/{id}(id=${document.id})}" method="post"> <!-- enctype="multipart/form-data"  fixme    -->
+        <label for="type">type: </label><br>
+        <input type="text" id="type" name="type" th:value="${document.type}" required><br>
+
+        <label for="name">Name: </label><br>
+        <input type="text" id="name" name="name" th:value="${document.name}" required><br>
+
+        <label for="description">description: </label><br>
+        <input type="text" id="description" name="description" th:value="${document.description}" required><br>
+
+
+        <!--<label for="file">files: </label><br>
+        <input type="file" id="file" name="files" multiple><br><br>--> <!--fixme-->
+
+        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">--> <!--fixme-->
+        <input type="submit">
+    </form>
+</div>
+</body>
+</html>
