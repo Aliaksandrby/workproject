@@ -27,7 +27,7 @@
     <td th:text="${document.description}"></td>
     <td>
         <div th:each="fileDocument : ${document.fileDocumentList}">
-            <span th:text="${fileDocument.file == ''} ? 'empty':'not empty'"></span>
+            <a th:href="${fileDocument.file == ''} ? 'empty':${'data:file/pdf;base64,'+{file}}"><span th:text="${fileDocument.file == ''} ? 'empty':${fileDocument.id}"></span></a>
         </div>
 
     </td>

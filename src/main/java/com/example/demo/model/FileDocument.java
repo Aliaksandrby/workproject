@@ -14,7 +14,7 @@ public class FileDocument {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
