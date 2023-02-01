@@ -4,15 +4,15 @@ import com.example.demo.model.Document;
 import com.example.demo.model.FileDocument;
 import com.example.demo.repository.DocumentRepository;
 import com.example.demo.repository.FileDocumentRepository;
-import lombok.SneakyThrows;
+import com.example.demo.search.SearchObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,51 +33,75 @@ public class DocumentService {
         return documentRepository.findById(id).get();
     }
 
-    public void deleteDocument(Long id) {
-        documentRepository.delete(getDocument(id));
-    }
-
-    public void createDocument(Document document, MultipartFile[] files){
+    public Document createDocument(Document document, MultipartFile[] files) {
         documentRepository.save(document);
-        if (!(files.length==1 && Objects.equals(files[0].getOriginalFilename(), ""))) {
-            List<FileDocument> fileDocumentList = addFilesToDocument(document,files);
-            document.setFileDocumentList(fileDocumentList);
-        } else {
-            FileDocument fileDocument = new FileDocument();
-            fileDocument.setDocument(document);
-            fileDocument.setFile("");
-            document.setFileDocumentList(List.of(fileDocument));
-            fileDocumentRepository.save(fileDocument);
-        }
+        createNewFilesDocument(document,files);
+        return getDocument(document.getId());
+    }
+
+    public void deleteDocument(Long id) {
+        Document document = documentRepository.findById(id).get();
+        deleteFilesDocument(document.getFileDocumentList());
+        documentRepository.delete(document);
 
     }
 
-    public void updateDocument(Document document,Long id) {
-        Document updateDocument = getDocument(id);
+    public Document updateDocument(Document document, Long id, MultipartFile[] files) {
+        Document document1 = documentRepository.findById(id).get();
+        document1.setDescription(document.getDescription());
 
-        if(document.getType() != null) {
-            updateDocument.setType(document.getType());
+        if(!(files.length == 1 && Objects.equals(files[0].getOriginalFilename(), ""))) {
+            deleteFilesDocument(document1.getFileDocumentList());
+            createNewFilesDocument(document1,files);
         }
-
-        if(document.getName() != null) {
-            updateDocument.setName(document.getName());
-        }
-
-        if(document.getDescription() != null) {
-            updateDocument.setDescription(document.getDescription());
-        }
+        return document1;
     }
 
-    @SneakyThrows
-    private List<FileDocument> addFilesToDocument(Document document,MultipartFile[] files){
-        List<FileDocument> fileDocumentList = new ArrayList<>();
+
+    private void createNewFilesDocument(Document document, MultipartFile[] files) {
         for (MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
+
             FileDocument fileDocument = new FileDocument();
             fileDocument.setDocument(document);
-            fileDocument.setFile(Base64.getEncoder().encodeToString(file.getBytes()));
-            fileDocumentList.add(fileDocument);
+            fileDocument.setFileName(fileName);
             fileDocumentRepository.save(fileDocument);
+
+            File folder = new File("storage");
+            if(!folder.mkdir()) System.out.println("the folder didn't create");
+
+            try {
+                file.transferTo(
+                        new File(
+                                ""
+                                        + folder.getAbsolutePath() + "/"
+                                        + fileDocument.getId() + "."
+                                        + StringService.getTypeOfFile(fileName)
+                        )
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return fileDocumentList;
+    }
+
+    private void deleteFilesDocument(List<FileDocument> fileDocumentList) {
+        for (FileDocument fd : fileDocumentList) {
+            File file = new File("storage/"+fd.getId() + "." + StringService.getTypeOfFile(fd.getFileName()));
+            if(!file.delete()) System.out.println("the file didn't delete");
+            fileDocumentRepository.delete(fd);
+        }
+    }
+
+    public List<Document> searchDocuments(SearchObject searchObject) {
+        List<Document> documentList = new ArrayList<>();
+        if(!Objects.equals(searchObject.getDescription(), "")) {
+            for (Document document : getDocuments()){
+                if(document.getDescription().contains(searchObject.getDescription())) {
+                    documentList.add(document);
+                }
+            }
+        }
+        return documentList;
     }
 }

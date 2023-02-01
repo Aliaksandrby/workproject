@@ -21,12 +21,12 @@ public class CreateDocumentController {
 
 
     @PostMapping("/document/new")
-    public String createDocument(Document document, Model model, @RequestParam("files") MultipartFile[] files) {
-        for (MultipartFile m : files) {
-            System.out.println(m.getOriginalFilename());
-        }
-        documentService.createDocument(document,files);
-        model.addAttribute("documentList",documentService.getDocuments());
-        return "ReadDocuments";
+    public String createDocument(
+            Document document,
+            Model model,
+            @RequestParam("files") MultipartFile[] files
+    ) { // todo file upload last
+        model.addAttribute("document",documentService.createDocument(document,files));
+        return "UpdateDocument";
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UpdateDocumentController {
@@ -24,9 +26,13 @@ public class UpdateDocumentController {
 
 
     @PostMapping("/update/{id}")
-    public String updateDocument(@PathVariable("id") Long id, Document document, Model model) {
-        documentService.updateDocument(document,id);
-        model.addAttribute("document",documentService.getDocument(id));
+    public String updateDocument(
+            @PathVariable("id") Long id,
+            Document document,
+            Model model,
+            @RequestParam("files") MultipartFile[] files
+    ) {
+        model.addAttribute("document",documentService.updateDocument(document,id,files));
         return "UpdateDocument";
     }
 

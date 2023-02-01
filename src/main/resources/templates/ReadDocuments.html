@@ -9,27 +9,35 @@
 <body>
 <h3 align="center">My all documents</h3>
 <h3 align="center"><a th:href="@{/document/new}">create document</a></h3>
-
+<form th:action="@{/search}" method="post">
+    <table class="rounded" align="center">
+        <tr>
+            <th>description</th>
+            <th>click</th>
+        </tr>
+        <tr>
+            <td><input type="text" id="description" name="description"></td>
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">--> <!--fixme-->
+            <td><input type="submit"></td>
+        </tr>
+    </table>
+</form>
+<br><br>
 <table class="rounded" align="center">
 <tr>
     <th>id</th>
-    <th>type</th>
-    <th>name</th>
     <th>description</th>
-    <th>files</th>
+    <th>filesNames</th>
     <th>Is Update?</th>
     <th>Is delete?</th>
 </tr>
-<tr th:each="document : ${documentList}">
+<tr th:each="document : ${documentList}"> <!-- <td th:text="${documentList.size()}"></td>  -->
     <td th:text="${document.id}"></td>
-    <td th:text="${document.type}"></td>
-    <td th:text="${document.name}"></td>
     <td th:text="${document.description}"></td>
     <td>
         <div th:each="fileDocument : ${document.fileDocumentList}">
-            <a th:href="${fileDocument.file == ''} ? 'empty':${'data:file/pdf;base64,'+{file}}"><span th:text="${fileDocument.file == ''} ? 'empty':${fileDocument.id}"></span></a>
+            <a th:href="@{/{id}(id=${fileDocument.id})}"><span th:text="${fileDocument.fileName}"></span></a>
         </div>
-
     </td>
     <td><a th:href="@{/update/{id}(id=${document.id})}">update</a></td>
     <td><a th:href="@{/delete/{id}(id=${document.id})}">delete</a></td>
@@ -39,13 +47,3 @@
 
 </body>
 </html>
-
-<!-- <img th:src="${car.imageCarList.get(0).image.equals('')} ?
-                    @{/resources/img/noAuto.png} : ${'data:image/jpeg;base64,'+{car.imageCarList.get(0).image}}"> -->
-
-<!--<div id="avrDiv" class="warning" th:each="carImage : ${car.imageCarList}">
-    <img th:src="${carImage.image.equals('')} ?
-             @{/resources/img/noAuto.png} : ${'data:image/jpeg;base64,'+{carImage.image}}">
-</div>-->
-
-<!--th:src="${'data:file/pdf;base64,' + myfile.profilePdf}"-->

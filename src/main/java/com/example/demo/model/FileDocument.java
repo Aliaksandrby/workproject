@@ -16,13 +16,11 @@ public class FileDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn (name="document_id")
     private Document document;
 
-    @Lob
-    @Column(name = "file",columnDefinition = "MEDIUMBLOB")
-    private String file;
+    @Column(name = "file_name")
+    private String fileName;
 
 }

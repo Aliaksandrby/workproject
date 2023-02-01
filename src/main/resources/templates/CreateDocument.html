@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Create document</title>
+    <link th:href="@{/css/tag_a.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h3 align="center">Create document</h3>
-
+<h3 align="center"><a th:href="@{/}">return to main page</a></h3>
 <div align="center">
 <form th:action="@{/document/new}" enctype="multipart/form-data" method="post"> <!--   fixme    -->
-    <label for="type">type: </label><br>
-    <input type="text" id="type" name="type" value="type" required><br>
-
-    <label for="name">Name: </label><br>
-    <input type="text" id="name" name="name" value="name" required><br>
 
     <label for="description">description: </label><br>
     <input type="text" id="description" name="description" value="description" required><br>
 
-
     <label for="files">files: </label><br>
-    <input type="file" id="files" name="files" multiple><br><br> <!--fixme-->
+    <input type="file" id="files" name="files" multiple required><br><br> <!--fixme-->
 
     <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">--> <!--fixme-->
     <input type="submit">
