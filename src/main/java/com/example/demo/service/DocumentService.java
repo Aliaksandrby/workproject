@@ -6,6 +6,8 @@ import com.example.demo.repository.DocumentRepository;
 import com.example.demo.repository.FileDocumentRepository;
 import com.example.demo.search.SearchObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -93,7 +95,7 @@ public class DocumentService {
         }
     }
 
-    public List<Document> searchDocuments(SearchObject searchObject) {
+    public List<Document> searchDocuments(SearchObject searchObject) { //todo it's slow to work for pagination
         List<Document> documentList = new ArrayList<>();
         if(!Objects.equals(searchObject.getDescription(), "")) {
             for (Document document : getDocuments()){
@@ -103,5 +105,9 @@ public class DocumentService {
             }
         }
         return documentList;
+    }
+
+    public Page<Document> getPageDocuments(int page,int size) {
+        return documentRepository.findAll(PageRequest.of(page,size));
     }
 }

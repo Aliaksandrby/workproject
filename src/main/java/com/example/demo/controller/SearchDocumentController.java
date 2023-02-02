@@ -19,12 +19,7 @@ public class SearchDocumentController {
 
     @PostMapping("/search")
     public String searchDocuments(SearchObject searchObject, Model model) {
-        System.out.println(searchObject.getDescription());
-        if(searchObject.getDescription() == null) System.out.println("null");
-        if(Objects.equals(searchObject.getDescription(), "")) System.out.println("empty");
-
         model.addAttribute("documentList",documentService.searchDocuments(searchObject));
-
-        return "ReadDocuments";
+        return "SearchDocuments";
     }
 }

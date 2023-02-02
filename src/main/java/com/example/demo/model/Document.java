@@ -18,7 +18,7 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
+    @Column(name = "description",length = 100000)
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER,

@@ -1,0 +1,17 @@
+.p-class {
+    text-align: center
+}
+
+.b-class {
+	font-size: 20px;
+	width: 330px;
+	height: 30px;
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+	border-radius:.2rem
+}
+
+.form-center {
+    text-align: center
+}

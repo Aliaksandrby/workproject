@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Documents</title>
+  <link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tag_a.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/paging.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/button.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/button.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h3 align="center">Search documents</h3>
+<p th:replace="~{fragments::logout}"></p>
+<h3 align="center"><a th:href="@{/document/new}">create document</a></h3>
+<form th:action="@{/search}" method="post">
+  <table class="rounded" align="center">
+    <tr>
+      <th>description</th>
+      <th>click</th>
+    </tr>
+    <tr>
+      <td><input type="text" id="description" name="description"></td>
+      <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">--> <!--fixme-->
+      <td><input type="submit"></td>
+    </tr>
+  </table>
+</form>
+<br><br>
+<table class="rounded" align="center">
+  <tr>
+    <th>id</th>
+    <th>description</th>
+    <th>filesNames</th>
+    <th>Is Update?</th>
+    <th>Is delete?</th>
+  </tr>
+  <tr th:each="document : ${documentList}"> <!-- <td th:text="${documentList.size()}"></td>  -->
+    <td th:text="${document.id}"></td>
+    <td th:text="${document.description}"></td>
+    <td>
+      <div th:each="fileDocument : ${document.fileDocumentList}">
+        <a th:href="@{/{id}(id=${fileDocument.id})}"><span th:text="${fileDocument.fileName}"></span></a>
+      </div>
+    </td>
+    <td><a th:href="@{/update/{id}(id=${document.id})}">update</a></td>
+    <td><a th:href="@{/delete/{id}(id=${document.id})}">delete</a></td>
+  </tr>
+</table>
+<br><br>
+<!--<div class="center">
+  <div class="pagination">
+    <a th:text="${offset > 1} ? '&laquo;':''"
+       th:href="${offset == 1} ? '' : @{/page/{count}(count=${offset-1})}"></a>
+    <a th:each="i : ${#numbers.sequence(startPage, endPage)}"
+       th:href="@{/page/{i}(i=${i})}"
+       th:class="${i==offset && numberOfPages > 1} ? 'active'"
+       th:text="${numberOfPages < 2} ? '': ${i}"></a>
+    <a th:text="${offset < numberOfPages} ? '&raquo;':''"
+       th:href="${offset < numberOfPages} ? @{/page/{count}(count=${offset+1})}"></a>
+  </div>
+</div>-->
+
+</body>
+</html>

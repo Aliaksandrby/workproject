@@ -15,9 +15,8 @@ public class DeleteDocumentController {
     private DocumentService documentService;
 
     @GetMapping("/delete/{id}")
-    public String deleteDocument(Model model, @PathVariable("id") Long id) {
+    public String deleteDocument(@PathVariable("id") Long id) {
         documentService.deleteDocument(id);
-        model.addAttribute("documentList",documentService.getDocuments());
-        return "ReadDocuments";
+        return "redirect:/";
     }
 }

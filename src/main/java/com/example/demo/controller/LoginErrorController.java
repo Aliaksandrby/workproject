@@ -1,0 +1,20 @@
+package com.example.demo.controller;
+
+import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class LoginErrorController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/loginError.html")
+    public String loginError(Model model) {
+        model.addAttribute("error", UserService.loginPassError);
+        return "login";
+    }
+}

@@ -14,13 +14,13 @@ public class CreateDocumentController {
     @Autowired
     private DocumentService documentService;
 
-    @GetMapping("/document/new")
+    @GetMapping("/create")
     public String createDocument() {
         return "CreateDocument";
     }
 
 
-    @PostMapping("/document/new")
+    @PostMapping("/create")
     public String createDocument(
             Document document,
             Model model,
