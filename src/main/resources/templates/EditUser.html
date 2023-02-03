@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+    <link th:href="@{/css/tag_a.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/button.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/table.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p th:replace="~{fragments::logout}"></p>
+<h1 align="center">Edit user panel</h1>
+<p th:replace="~{fragments::returnToMainPage}"></p>
+<table class="rounded" align="center">
+  <tr>
+    <!--<th>id</th>-->
+    <th>Username</th>
+    <th>Password</th>
+  </tr>
+  <tr>
+    <!--<td th:text="${user.id}"></td>-->
+    <td th:text="${user.username}"></td>
+    <td th:text="${user.password}"></td>
+  </tr>
+</table>
+<div align="center">
+  <form th:action="@{/editUser}" method="post">
+    <label for="username">username: </label><br>
+    <input type="text" id="username" name="username" th:value="${user.username}" required><br>
+
+    <label for="password">password: </label><br>
+    <input type="password" id="password" name="password" placeholder="password" required><br>
+
+    <label for="confirmPassword">Confirm password: </label><br>
+    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="password" required><br>
+    <br><br>
+    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+    <input type="submit" value="send">
+  </form>
+  <span style="color:red" th:text="${user.message}"></span>
+</div>
+</body>
+</html>

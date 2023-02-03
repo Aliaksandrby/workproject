@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Document;
 import com.example.demo.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class UpdateDocumentController {
     private DocumentService documentService;
 
     @GetMapping("/update/{id}")
+    @Secured(value = {"ROLE_ADMIN"})
     public String updateDocument(Model model, @PathVariable("id") Long id) {
         model.addAttribute("document",documentService.getDocument(id));
         return "UpdateDocument";
@@ -26,6 +28,7 @@ public class UpdateDocumentController {
 
 
     @PostMapping("/update/{id}")
+    @Secured(value = {"ROLE_ADMIN"})
     public String updateDocument(
             @PathVariable("id") Long id,
             Document document,

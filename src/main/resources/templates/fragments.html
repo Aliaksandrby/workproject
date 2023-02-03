@@ -5,16 +5,35 @@
     <title>fragments</title>
 </head>
 <body>
-<form th:fragment="logout" method="post" sec:authorize="isAuthenticated()" th:action="@{/logout}" class="form-center">
+<form th:fragment="logout" method="post" sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/logout}" class="form-center">
   <button class="b-class" type="submit">
-    logout <span sec:authentication="name"></span>
+    logout: <span sec:authentication="name"></span>
   </button>
 </form>
 
-<p th:fragment="login" sec:authorize="isAuthenticated()" class="p-class">
+<p th:fragment="login" sec:authorize="isAuthenticated()==false" class="p-class">
     <a th:href="@{/login.html}">
         <button class="b-class">login</button>
     </a>
 </p>
+
+<p th:fragment="editUser" sec:authorize="hasRole('ROLE_ADMIN')" class="p-class">
+    <a th:href="@{/editUser}">
+        <button class="b-class">edit user</button>
+    </a>
+</p>
+
+<p th:fragment="createDocument" sec:authorize="${hasRole('ROLE_ADMIN')}" class="p-class">
+    <a th:href="@{/create}">
+        <button class="b-class">create document</button>
+    </a>
+</p>
+
+<p th:fragment="returnToMainPage" class="p-class">
+    <a th:href="@{/}">
+        <button class="b-class">return to main page</button>
+    </a>
+</p>
+
 </body>
 </html>

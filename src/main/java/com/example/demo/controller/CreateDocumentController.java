@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Document;
 import com.example.demo.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,14 @@ public class CreateDocumentController {
     private DocumentService documentService;
 
     @GetMapping("/create")
+    @Secured(value = {"ROLE_ADMIN"})
     public String createDocument() {
         return "CreateDocument";
     }
 
 
     @PostMapping("/create")
+    @Secured(value = {"ROLE_ADMIN"})
     public String createDocument(
             Document document,
             Model model,

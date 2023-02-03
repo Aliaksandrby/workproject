@@ -12,7 +12,8 @@
 <h3 align="center">Regulatory Background Information</h3>
 <p th:replace="~{fragments::login}"></p>
 <p th:replace="~{fragments::logout}"></p>
-<h3 align="center"><a th:href="@{/create}">create document</a></h3>
+<p th:replace="~{fragments::editUser}"></p>
+<p th:replace="~{fragments::createDocument}"></p>
 <form th:action="@{/search}" method="post">
     <table class="rounded" align="center">
         <tr>
@@ -21,7 +22,7 @@
         </tr>
         <tr>
             <td><input type="text" id="description" name="description"></td>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
             <td><input type="submit"></td>
         </tr>
     </table>
@@ -29,14 +30,14 @@
 <br><br>
 <table class="rounded" align="center">
 <tr>
-    <th>id</th>
+    <!--<th>id</th>-->
     <th>description</th>
     <th>filesNames</th>
     <th>Is Update?</th>
     <th>Is delete?</th>
 </tr>
 <tr th:each="document : ${documentList}"> <!-- <td th:text="${documentList.size()}"></td>  -->
-    <td th:text="${document.id}"></td>
+    <!--<td th:text="${document.id}"></td>-->
     <td th:text="${document.description}"></td>
     <td>
         <div th:each="fileDocument : ${document.fileDocumentList}">

@@ -10,17 +10,17 @@
 <body>
 <h3 align="center">Update document</h3>
 <p th:replace="~{fragments::logout}"></p>
-<h3 align="center"><a th:href="@{/}">return to main page</a></h3>
+<p th:replace="~{fragments::returnToMainPage}"></p>
 <table class="rounded" align="center">
     <tr>
-        <th>id</th>
+        <!--<th>id</th>-->
         <th>description</th>
         <th>filesNames</th>
         <th>Is Update?</th>
         <th>Is delete?</th>
     </tr>
     <tr>
-        <td th:text="${document.id}"></td>
+        <!--<td th:text="${document.id}"></td>-->
         <td th:text="${document.description}"></td>
         <td>
             <div th:each="fileDocument : ${document.fileDocumentList}">
@@ -39,9 +39,9 @@
         <input type="text" id="description" name="description" th:value="${document.description}" required><br>
 
         <label for="file">files: </label><br>
-        <input type="file" id="file" name="files" multiple required><br><br>
+        <input type="file" id="file" name="files" multiple><br><br>
 
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
         <input type="submit">
     </form>
 </div>

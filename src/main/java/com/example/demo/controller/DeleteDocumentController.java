@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ public class DeleteDocumentController {
     private DocumentService documentService;
 
     @GetMapping("/delete/{id}")
+    @Secured(value = {"ROLE_ADMIN"})
     public String deleteDocument(@PathVariable("id") Long id) {
         documentService.deleteDocument(id);
         return "redirect:/";
