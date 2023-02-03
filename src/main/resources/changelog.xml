@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="7" author="Aliaksandr.by">
+    <changeSet id="1" author="Aliaksandr.by">
         <sql>
             INSERT INTO t_role(id, name) VALUES (1, 'ROLE_ADMIN');
             INSERT INTO t_user(id, username, password) VALUES (1, 'admin','$2a$10$oLjEcISCg9p7FPicTn4bKOzC6EYYxSmXiid2UxdJILuQdlZYAx1Ba');
