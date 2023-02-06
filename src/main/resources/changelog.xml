@@ -7,6 +7,33 @@
 
     <changeSet id="1" author="Aliaksandr.by">
         <sql>
+            CREATE TABLE IF NOT EXISTS t_user (
+                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                username VARCHAR(255),
+                password VARCHAR(255)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="2" author="Aliaksandr.by">
+        <sql>
+            CREATE TABLE IF NOT EXISTS t_role (
+                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                name VARCHAR(100)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="Aliaksandr.by">
+        <sql>
+            CREATE TABLE IF NOT EXISTS t_user_roles (
+                user_id INT,
+                role_id INT,
+                FOREIGN KEY (user_id) REFERENCES t_user (id),
+                FOREIGN KEY (role_id)  REFERENCES t_role (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="4" author="Aliaksandr.by">
+        <sql>
             INSERT INTO t_role(id, name) VALUES (1, 'ROLE_ADMIN');
             INSERT INTO t_user(id, username, password) VALUES (1, 'admin','$2a$10$oLjEcISCg9p7FPicTn4bKOzC6EYYxSmXiid2UxdJILuQdlZYAx1Ba');
             INSERT INTO t_user_roles VALUES (1,1);
